@@ -13,7 +13,7 @@ const props = defineProps({
 
 let messages = ref(props.messages);
 
-const redis = io('http://localhost:3000/', { transports : ['websocket'] });
+const redis = io('http://localhost:3000/', {transports: ['websocket']});
 
 let messagesContainer;
 onMounted(() => {
@@ -54,15 +54,22 @@ const createMessage = () => {
     <div class="py-12 h-[70vh] overflow-y-auto" id="messages">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-xl sm:rounded-lg flex flex-col p-5">
-                <ul>
-                    <li v-for="message in messages" key="thread.id" :class="[ message.user_id === user.id ? 'text-right' : 'text-left' ]" class="my-2 border border-black/10 p-2">
-                        <span class="text-sm font-bold mr-2">{{ message.name }}</span>
+                <ul class="flex flex-col">
+                    <li v-for="message in messages" key="thread.id"
+                        :class="[ message.user_id === user.id ? 'self-end' : 'self-start' ]" class="flex flex-col my-2">
+                        <span class="text-sm font-bold mr-2" v-text="message.user_id !== user.id ? message.name : 'Vous'"></span>
+                        <span class="border border-black/10 p-2 rounded-2xl w-fit">
                         {{ message.body }}
-                        <span class="text-xs">{{ moment(message.created_at).fromNow() }}</span></li>
+                        </span>
+                        <span class="text-[11px] ml-2">{{ moment(message.created_at).fromNow() }}</span>
+                    </li>
                 </ul>
-                <form @submit.prevent="createMessage" class="ml-auto">
-                    <textarea v-model="form.body" rows="5" cols="30" @keydown.ctrl.enter="createMessage"></textarea>
-                    <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Envoyer</PrimaryButton>
+                <form @submit.prevent="createMessage" class="ml-auto flex flex-col gap-2">
+                    <textarea v-model="form.body" rows="5" cols="30" @keydown.ctrl.enter="createMessage"
+                              class="border border-black/20"></textarea>
+                    <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+                                   class="w-fit">Envoyer
+                    </PrimaryButton>
                 </form>
 
             </div>

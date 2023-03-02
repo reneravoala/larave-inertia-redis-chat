@@ -45,7 +45,7 @@ class MessagesController extends Controller
 
     public function create(int $thread_id, CreateMessageRequest $request)
     {
-        Message::create([
+        $message = Message::create([
             'thread_id' => $thread_id,
             'user_id' => auth()->user()->id,
             'body' => $request->body,
@@ -56,6 +56,7 @@ class MessagesController extends Controller
             'user_id' => auth()->user()->id,
             'body' => $request->body,
             'name' => auth()->user()->name,
+            'created_at' => $message->created_at,
         ]));
     }
 
