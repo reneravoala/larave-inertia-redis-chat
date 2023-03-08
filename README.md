@@ -2,7 +2,7 @@
 ## Installation guide
 
 ```shell
-git clone git@github.com:/reneravoala/laravel-inertia-redis-chat.git
+git clone git@github.com:reneravoala/laravel-inertia-redis-chat.git
 cd praxis_backend
 
 composer install
